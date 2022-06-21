@@ -8,11 +8,13 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
+    historyApiFallback: true,
   },
   mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   devtool: process.env.NODE_ENV === 'development' ? 'eval-cheap-module-source-map' : 'source-map',
