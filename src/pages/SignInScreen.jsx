@@ -1,26 +1,32 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
+import jwt_decode from "jwt-decode";
 
 import Logo from '../assets/Logo.jpg';
-// import TokenContext from '../contexts/TokenContext';
-
-function SignInScreen() {
-  // const {user, setUser} = useContext(TokenContext);
-  const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
-
-  //   if (user.token !== '') navigate('/today');
-
-//   const [inputError, setInputError] = useState(false);
-
-    const [loading, setLoading] = useState(false);
+import useAuth from '../hooks/useAuth';
 
   //   const URL = 'https://...deploy';
   const URL = 'http://localhost:4000';
+
+function SignInScreen() {
+
+  const { signIn, token } = useAuth();
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
+//   const [inputError, setInputError] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+        const decoded = jwt_decode(token);
+        if (decoded.levelId === 1) navigate('/admin');
+        else navigate('/user')
+    }
+  }, []);
 
   async function onSubmit(obj) {
     setLoading(true);
@@ -29,17 +35,17 @@ function SignInScreen() {
       await axios.post(`${URL}/login`, obj)
         .then((response) => {
           const { token } = response.data;
-          console.log(token);
-          //   setUser({
-          //     ...user, name, email, token, transactions,
-          //   }); PARA ATUALIZAR O CONTEXT
-
-            setLoading(false);
-
-        //   navigate('/history'); NAVEGA PARA A MAIN
+          if (token) {
+            signIn(token);
+            const decoded = jwt_decode(token);
+            console.log(decoded);
+            if (decoded.levelId === 1) navigate('/admin');
+            else navigate('/user')
+          }
+          setLoading(false);
         });
     } catch (e) {
-      console.log('Problema no post para o server', e);
+        console.log('Problema no post para o server', e);
         setLoading(false);
         // setInputError(true);
     }
