@@ -8,8 +8,8 @@ import { ThreeDots } from 'react-loader-spinner';
 import Logo from '../assets/Logo.jpg';
 
 function SignUpScreen() {
-  //   const URL = 'https://...deploy';
-  const URL = 'http://localhost:4000';
+    const URL = 'https://labtec-udesc.herokuapp.com';
+//   const URL = 'http://localhost:4000';
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

@@ -11,21 +11,6 @@ import UserScreen from '../pages/UserScreen.jsx';
 import AdminScreen from '../pages/AdminScreen.jsx';
 
 function App() {
-//   const [user, setUser] = useState(() => {
-//     const saved = localStorage.getItem('user');
-//     const initialValue = JSON.parse(saved);
-//     return initialValue || {
-//       token: '',
-//       image: '',
-//       todayPercentage: 0,
-//       name: '',
-//       habits: [],
-//     };
-//   });
-
-//   useEffect(() => {
-//     localStorage.setItem('user', JSON.stringify(user));
-//   }, [user]);
 
   return (
     <UserProvider>

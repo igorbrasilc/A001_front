@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
+import AdminHeader from '../components/AdminHeader.jsx';
 
 export default function AdminScreen() {
     return (
-        <h1>Essa é a tela de admin</h1>
+        <>
+            <AdminHeader />
+        </>
     )
 }

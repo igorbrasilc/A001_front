@@ -9,8 +9,8 @@ import jwt_decode from "jwt-decode";
 import Logo from '../assets/Logo.jpg';
 import useAuth from '../hooks/useAuth';
 
-  //   const URL = 'https://...deploy';
-  const URL = 'http://localhost:4000';
+    const URL = 'https://labtec-udesc.herokuapp.com';
+//   const URL = 'http://localhost:4000';
 
 function SignInScreen() {
 

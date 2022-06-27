@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
+import UserHeader from '../components/UserHeader.jsx';
 
 export default function UserScreen() {
     return (
-        <h1>Essa é a tela de usuario</h1>
+        <>
+            <UserHeader />
+        </>
     )
 }
