@@ -21,7 +21,8 @@ function SignUpScreen() {
     try {
       await axios.post(`${URL}/cadastro`, obj)
         .then((response) => {
-          console.log('cadastrado');
+          alert('Cadastrado!');
+          navigate('/');
           //   setUser({
           //     ...user, name, email, token, transactions,
           //   }); PARA ATUALIZAR O CONTEXT
