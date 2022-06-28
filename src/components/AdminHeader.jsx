@@ -1,11 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router';
 
 function UserHeader() {
+
+    const { signOut, token } = useAuth();
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        signOut();
+        navigate('/');
+    }
+
     return (
         <HeaderContainer>
             <h2>Tela de admin</h2>
-            <button>Logout</button>
+            <button onClick={() => handleLogout()}>Logout</button>
         </HeaderContainer>
     )
 };
@@ -43,6 +54,17 @@ button {
     &:hover {
         cursor: pointer;
         border-color: white;
+    }
+}
+
+@media (max-width: 600px) {
+    h2 {
+        font-size: 20px;
+        padding-left: 10px;
+    }
+
+    button {
+        padding: 10px;
     }
 }
 `

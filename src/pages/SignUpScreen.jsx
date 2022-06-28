@@ -8,8 +8,8 @@ import { ThreeDots } from 'react-loader-spinner';
 import Logo from '../assets/Logo.jpg';
 
 function SignUpScreen() {
-    const URL = 'https://labtec-udesc.herokuapp.com';
-//   const URL = 'http://localhost:4000';
+    // const URL = 'https://labtec-udesc.herokuapp.com';
+  const URL = 'http://localhost:4000';
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,15 +21,9 @@ function SignUpScreen() {
     try {
       await axios.post(`${URL}/cadastro`, obj)
         .then((response) => {
+          setLoading(false);
           alert('Cadastrado!');
           navigate('/');
-          //   setUser({
-          //     ...user, name, email, token, transactions,
-          //   }); PARA ATUALIZAR O CONTEXT
-
-          setLoading(false);
-
-          //   navigate('/history'); NAVEGA PARA A MAIN
         });
     } catch (e) {
       console.log('Problema no post para o server', e);
@@ -161,6 +155,12 @@ const $LoginScreen = styled.main`
         }
         &:active {
             color: var(--color-logo-header);
+        }
+    }
+
+    @media (max-width: 600px) {
+        img {
+            width: 350px;
         }
     }
 `;

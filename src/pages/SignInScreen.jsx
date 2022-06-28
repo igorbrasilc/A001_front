@@ -9,8 +9,8 @@ import jwt_decode from "jwt-decode";
 import Logo from '../assets/Logo.jpg';
 import useAuth from '../hooks/useAuth';
 
-    const URL = 'https://labtec-udesc.herokuapp.com';
-//   const URL = 'http://localhost:4000';
+    // const URL = 'https://labtec-udesc.herokuapp.com';
+  const URL = 'http://localhost:4000';
 
 function SignInScreen() {
 
@@ -38,7 +38,6 @@ function SignInScreen() {
           if (token) {
             signIn(token);
             const decoded = jwt_decode(token);
-            console.log(decoded);
             if (decoded.levelId === 1) navigate('/admin');
             else navigate('/user')
           }
@@ -162,6 +161,12 @@ const $LoginScreen = styled.main`
         }
         &:active {
             color: var(--color-logo-header);
+        }
+    }
+
+    @media (max-width: 600px) {
+        img {
+            width: 350px;
         }
     }
 `;
