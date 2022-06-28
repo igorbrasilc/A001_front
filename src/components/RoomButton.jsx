@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import useAuth from '../hooks/useAuth';
+import urlApi from '../api/urlApi.js';
 
-// const URL = 'https://labtec-udesc.herokuapp.com';
-  const URL = 'http://localhost:4000';
+const URL = urlApi.prod;
 
 export default function RoomButton({ roomChosen }) {
 

@@ -6,10 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 
 import Logo from '../assets/Logo.jpg';
+import urlApi from '../api/urlApi';
+
+const URL = urlApi.prod;
 
 function SignUpScreen() {
-    // const URL = 'https://labtec-udesc.herokuapp.com';
-  const URL = 'http://localhost:4000';
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
