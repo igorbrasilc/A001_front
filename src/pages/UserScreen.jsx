@@ -11,7 +11,7 @@ export default function UserScreen() {
         <ContainerMainScreen>
             <UserHeader />
             <RoomButton roomChosen={setRoom} />
-            {room == '' ? <p>Escolha uma sala</p> : <p>A sala escolhida é a sala X</p>}
+            {room == '' ? <p>Escolha uma sala</p> : <p>A sala escolhida é a {room.room}</p>}
         </ContainerMainScreen>
     )
 }
