@@ -45,6 +45,7 @@ function SignInScreen() {
         });
     } catch (e) {
         console.log('Problema no post para o server', e);
+        alert('Não foi possivel fazer o login, recarregue ou verifique a senha');
         setLoading(false);
         // setInputError(true);
     }
