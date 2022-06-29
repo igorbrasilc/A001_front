@@ -1,17 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import useAuth from '../hooks/useAuth.js';
 import urlApi from '../api/urlApi.js';
-import authConfig from '../api/authConfig.js';
 
 const URL = urlApi;
 
 export default function RoomButton({ roomChosen }) {
 
-    const { token } = useAuth();
-    const navigate = useNavigate();
     const [roomsAvailable, setRoomsAvailable] = useState([]);
 
     useEffect(() => {
@@ -44,7 +39,7 @@ export default function RoomButton({ roomChosen }) {
         <ContainerButton>
             <label htmlFor="rooms">Salas disponíveis:</label>
             <select name="rooms" id="rooms">
-                <option value=""></option>
+                <option value="" onClick={() => roomChosen('')}></option>
                 {showRoomOptions()}
             </select> 
         </ContainerButton>

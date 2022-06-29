@@ -1,6 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+@import '../../node_modules/react-agenda/build/styles.css';
+@import '../../node_modules/react-datetime/css/react-datetime.css';
+
 * {
     box-sizing: border-box;
     transition: 300ms;

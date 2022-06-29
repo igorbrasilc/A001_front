@@ -8,6 +8,8 @@ import useAuth from '../hooks/useAuth.js';
 import { useNavigate } from 'react-router';
 import urlApi from '../api/urlApi.js';
 
+import Agenda from '../components/CalendarComponent.jsx';
+
 export default function UserScreen() {
 
     useEffect(() => {
@@ -32,7 +34,7 @@ export default function UserScreen() {
         <ContainerMainScreen>
             <UserHeader />
             <RoomButton roomChosen={setRoom} />
-            {room == '' ? <p>Escolha uma sala</p> : <p>A sala escolhida é a {room.room}</p>}
+            {room == '' ? <p>Escolha uma sala</p> : <Agenda />}
         </ContainerMainScreen>
     )
 }
