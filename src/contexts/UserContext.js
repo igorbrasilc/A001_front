@@ -26,7 +26,7 @@ export function UserProvider({children}) {
 
     function updateUserInfos(userInfos) {
         setUserInfos(userInfos);
-        localStorage.setItem(LOCAL_STORAGE_KEY2, userInfos);
+        localStorage.setItem(LOCAL_STORAGE_KEY2, JSON.stringify(userInfos));
     }
 
     return (

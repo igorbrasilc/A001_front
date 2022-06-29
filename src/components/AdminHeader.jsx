@@ -9,8 +9,10 @@ function UserHeader() {
     const navigate = useNavigate();
 
     function handleLogout() {
-        signOut();
-        navigate('/');
+        if (confirm('Tem certeza que deseja sair?') === true) {
+            signOut();
+            navigate('/');
+        }
     }
 
     return (
