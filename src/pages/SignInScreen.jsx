@@ -10,7 +10,7 @@ import Logo from '../assets/Logo.jpg';
 import useAuth from '../hooks/useAuth';
 import urlApi from '../api/urlApi';
 
-const URL = urlApi.prod;
+const URL = urlApi.dev;
 
 function SignInScreen() {
 

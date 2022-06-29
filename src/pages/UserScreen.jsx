@@ -1,9 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserHeader from '../components/UserHeader.jsx';
 import RoomButton from '../components/RoomButton.jsx';
 import styled from 'styled-components';
+import axios from 'axios';
 
 export default function UserScreen() {
+
+    // useEffect(() => {
+    //     const promise = axios.get
+    // })
 
     const [room, setRoom] = useState('');
 

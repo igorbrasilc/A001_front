@@ -2,22 +2,17 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth.js';
 import urlApi from '../api/urlApi.js';
+import authConfig from '../api/authConfig.js';
 
-const URL = urlApi.prod;
+const URL = urlApi.dev;
 
 export default function RoomButton({ roomChosen }) {
 
-    const { token, signOut } = useAuth();
+    const { token } = useAuth();
     const navigate = useNavigate();
     const [roomsAvailable, setRoomsAvailable] = useState([]);
-
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }
 
     useEffect(() => {
         const promise = axios.get(`${URL}/salas`);
@@ -47,7 +42,7 @@ export default function RoomButton({ roomChosen }) {
 
     return (
         <ContainerButton>
-            <label for="rooms">Salas disponíveis:</label>
+            <label htmlFor="rooms">Salas disponíveis:</label>
             <select name="rooms" id="rooms">
                 <option value=""></option>
                 {showRoomOptions()}
