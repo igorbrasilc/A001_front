@@ -3,41 +3,28 @@ import React, { useState, useEffect } from 'react';
 
 import ResetCss from '../assets/resetCss.js';
 import GlobalStyle from '../assets/globalStyles';
-// import TokenContext from '../contexts/TokenContext';
+import { UserProvider } from '../contexts/UserContext.js';
 
-import SignInScreen from '../components/SignInScreen.jsx';
-import SignUpScreen from '../components/SignUpScreen.jsx';
+import SignInScreen from '../pages/SignInScreen.jsx';
+import SignUpScreen from '../pages/SignUpScreen.jsx';
+import UserScreen from '../pages/UserScreen.jsx';
+import AdminScreen from '../pages/AdminScreen.jsx';
 
 function App() {
-//   const [user, setUser] = useState(() => {
-//     const saved = localStorage.getItem('user');
-//     const initialValue = JSON.parse(saved);
-//     return initialValue || {
-//       token: '',
-//       image: '',
-//       todayPercentage: 0,
-//       name: '',
-//       habits: [],
-//     };
-//   });
-
-//   useEffect(() => {
-//     localStorage.setItem('user', JSON.stringify(user));
-//   }, [user]);
 
   return (
-    <>
+    <UserProvider>
       <ResetCss />
       <GlobalStyle />
-      {/* <TokenContext.Provider value={{ user, setUser }}> */}
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<SignInScreen />} />
           <Route exact path="/cadastro" element={<SignUpScreen />} />
+          <Route exact path="/user" element={<UserScreen />} /> 
+          <Route exact path="/admin" element={<AdminScreen />} /> 
         </Routes>
       </BrowserRouter>
-      {/* </TokenContext.Provider> */}
-    </>
+    </UserProvider>
   );
 }
 

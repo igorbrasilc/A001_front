@@ -1,38 +1,52 @@
 import styled from 'styled-components';
 import axios from 'axios';
+import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
+import jwt_decode from "jwt-decode";
 
 import Logo from '../assets/Logo.jpg';
+import useAuth from '../hooks/useAuth';
+import urlApi from '../api/urlApi';
 
-function SignUpScreen() {
-  //   const URL = 'https://...deploy';
-  const URL = 'http://localhost:4000';
+const URL = urlApi.prod;
 
-  const [loading, setLoading] = useState(false);
+function SignInScreen() {
+
+  const { signIn, token } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
+//   const [inputError, setInputError] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+        const decoded = jwt_decode(token);
+        if (decoded.levelId === 1) navigate('/admin');
+        else navigate('/user')
+    }
+  }, []);
 
   async function onSubmit(obj) {
     setLoading(true);
 
     try {
-      await axios.post(`${URL}/cadastro`, obj)
+      await axios.post(`${URL}/login`, obj)
         .then((response) => {
-          console.log('cadastrado');
-          //   setUser({
-          //     ...user, name, email, token, transactions,
-          //   }); PARA ATUALIZAR O CONTEXT
-
+          const { token } = response.data;
+          if (token) {
+            signIn(token);
+            const decoded = jwt_decode(token);
+            if (decoded.levelId === 1) navigate('/admin');
+            else navigate('/user')
+          }
           setLoading(false);
-
-          //   navigate('/history'); NAVEGA PARA A MAIN
         });
     } catch (e) {
-      console.log('Problema no post para o server', e);
-      setLoading(false);
+        console.log('Problema no post para o server', e);
+        setLoading(false);
+        // setInputError(true);
     }
   }
 
@@ -42,49 +56,37 @@ function SignUpScreen() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="email"
-          placeholder="email"
+          placeholder="E-mail"
           {...register('email')}
           disabled={loading}
           required
         />
         <input
-          type="text"
-          placeholder="nome"
-          {...register('name')}
-          disabled={loading}
-          required
-        />
-        <input
           type="password"
-          placeholder="confirme a senha"
+          placeholder="Senha"
           title="Deve conter pelo menos 1 número, 1 letra maiúscula, 1 minúscula e no mínimo 6 caracteres"
           pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$"
           {...register('password')}
           disabled={loading}
           required
         />
-        <input
-          type="password"
-          placeholder="confirme a senha"
-          {...register('confirmPassword')}
-          disabled={loading}
-          required
-        />
+        {/* {inputError === false ? <></> : <span>Verifique os dados!</span>} */}
         <button
           type="submit"
+          disabled={loading}
           className={loading === false ? '' : 'loading'}
         >
-          {loading === true ? <ThreeDots color="#FFF" height={80} width={80} /> : 'Cadastrar'}
+          {loading === false ? 'Entrar' : <ThreeDots color="#FFF" height={80} width={80} />}
         </button>
       </form>
-      <Link to="/">
-        <p>Já tem uma conta? Faça login!</p>
+      <Link to="/cadastro">
+        <p>Não tem uma conta? Cadastre-se!</p>
       </Link>
     </$LoginScreen>
   );
 }
 
-export default SignUpScreen;
+export default SignInScreen;
 
 const $LoginScreen = styled.main`
     display: flex;
@@ -97,7 +99,7 @@ const $LoginScreen = styled.main`
     height: 100vh;
     img {
         margin-top: 8%;
-        width: 600px;
+        width: 500px;
         margin-bottom: 33px;
     }
     form {
@@ -154,12 +156,17 @@ const $LoginScreen = styled.main`
         line-height: 17px;
         text-decoration-line: underline;
         text-decoration-color: var(--color-button-link);
-        margin-bottom: 20%;
         &:hover {
             cursor: pointer;
         }
         &:active {
             color: var(--color-logo-header);
+        }
+    }
+
+    @media (max-width: 600px) {
+        img {
+            width: 350px;
         }
     }
 `;

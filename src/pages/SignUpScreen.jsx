@@ -1,47 +1,34 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 
 import Logo from '../assets/Logo.jpg';
-// import TokenContext from '../contexts/TokenContext';
+import urlApi from '../api/urlApi';
 
-function SignInScreen() {
-  // const {user, setUser} = useContext(TokenContext);
+const URL = urlApi.prod;
+
+function SignUpScreen() {
+
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-
-  //   if (user.token !== '') navigate('/today');
-
-//   const [inputError, setInputError] = useState(false);
-
-    const [loading, setLoading] = useState(false);
-
-  //   const URL = 'https://...deploy';
-  const URL = 'http://localhost:4000';
 
   async function onSubmit(obj) {
     setLoading(true);
 
     try {
-      await axios.post(`${URL}/login`, obj)
+      await axios.post(`${URL}/cadastro`, obj)
         .then((response) => {
-          const { token } = response.data;
-          console.log(token);
-          //   setUser({
-          //     ...user, name, email, token, transactions,
-          //   }); PARA ATUALIZAR O CONTEXT
-
-            setLoading(false);
-
-        //   navigate('/history'); NAVEGA PARA A MAIN
+          setLoading(false);
+          alert('Cadastrado!');
+          navigate('/');
         });
     } catch (e) {
       console.log('Problema no post para o server', e);
-        setLoading(false);
-        // setInputError(true);
+      setLoading(false);
     }
   }
 
@@ -51,37 +38,49 @@ function SignInScreen() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="email"
-          placeholder="E-mail"
+          placeholder="email"
           {...register('email')}
           disabled={loading}
           required
         />
         <input
+          type="text"
+          placeholder="nome"
+          {...register('name')}
+          disabled={loading}
+          required
+        />
+        <input
           type="password"
-          placeholder="Senha"
+          placeholder="confirme a senha"
           title="Deve conter pelo menos 1 número, 1 letra maiúscula, 1 minúscula e no mínimo 6 caracteres"
           pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$"
           {...register('password')}
           disabled={loading}
           required
         />
-        {/* {inputError === false ? <></> : <span>Verifique os dados!</span>} */}
+        <input
+          type="password"
+          placeholder="confirme a senha"
+          {...register('confirmPassword')}
+          disabled={loading}
+          required
+        />
         <button
           type="submit"
-          disabled={loading}
           className={loading === false ? '' : 'loading'}
         >
-          {loading === false ? 'Entrar' : <ThreeDots color="#FFF" height={80} width={80} />}
+          {loading === true ? <ThreeDots color="#FFF" height={80} width={80} /> : 'Cadastrar'}
         </button>
       </form>
-      <Link to="/cadastro">
-        <p>Não tem uma conta? Cadastre-se!</p>
+      <Link to="/">
+        <p>Já tem uma conta? Faça login!</p>
       </Link>
     </$LoginScreen>
   );
 }
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const $LoginScreen = styled.main`
     display: flex;
@@ -94,7 +93,7 @@ const $LoginScreen = styled.main`
     height: 100vh;
     img {
         margin-top: 8%;
-        width: 500px;
+        width: 600px;
         margin-bottom: 33px;
     }
     form {
@@ -151,11 +150,18 @@ const $LoginScreen = styled.main`
         line-height: 17px;
         text-decoration-line: underline;
         text-decoration-color: var(--color-button-link);
+        margin-bottom: 20%;
         &:hover {
             cursor: pointer;
         }
         &:active {
             color: var(--color-logo-header);
+        }
+    }
+
+    @media (max-width: 600px) {
+        img {
+            width: 350px;
         }
     }
 `;
