@@ -8,7 +8,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import Logo from '../assets/Logo.jpg';
 import urlApi from '../api/urlApi';
 
-const URL = urlApi.dev;
+const URL = urlApi;
 
 function SignUpScreen() {
 

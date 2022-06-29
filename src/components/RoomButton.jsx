@@ -6,7 +6,7 @@ import useAuth from '../hooks/useAuth.js';
 import urlApi from '../api/urlApi.js';
 import authConfig from '../api/authConfig.js';
 
-const URL = urlApi.dev;
+const URL = urlApi;
 
 export default function RoomButton({ roomChosen }) {
 
