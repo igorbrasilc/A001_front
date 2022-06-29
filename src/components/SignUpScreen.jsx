@@ -97,7 +97,7 @@ const $LoginScreen = styled.main`
     height: 100vh;
     img {
         margin-top: 8%;
-        width: 500px;
+        width: 600px;
         margin-bottom: 33px;
     }
     form {
