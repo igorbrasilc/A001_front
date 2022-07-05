@@ -47,9 +47,17 @@ var colors= {
         numberOfDays:4,
         startDate: new Date()
       }
-      this.handleCellSelection = this.handleCellSelection.bind(this)
-      this.handleItemEdit = this.handleItemEdit.bind(this)
       this.handleRangeSelection = this.handleRangeSelection.bind(this)
+    this.handleItemEdit = this.handleItemEdit.bind(this)
+    this.zoomIn = this.zoomIn.bind(this)
+    this.zoomOut = this.zoomOut.bind(this)
+    this._openModal = this._openModal.bind(this)
+    this._closeModal = this._closeModal.bind(this)
+    this.addNewEvent = this.addNewEvent.bind(this)
+    this.removeEvent = this.removeEvent.bind(this)
+    this.editEvent = this.editEvent.bind(this)
+    this.changeView = this.changeView.bind(this)
+    this.handleCellSelection = this.handleCellSelection.bind(this)
     }
   
   handleCellSelection(item){
@@ -61,9 +69,57 @@ var colors= {
   handleRangeSelection(item){
     console.log('handleRangeSelection', item)
   }
+  changeView (days , event ){
+    this.setState({numberOfDays:days})
+  }
+  _openModal(){
+    this.setState({showModal:true})
+  }
+  _closeModal(e){
+    if(e){
+      e.stopPropagation();
+      e.preventDefault();
+    }
+      this.setState({showModal:false})
+  }
+removeEvent(items , item){
+
+    this.setState({ items:items});
+}
+
+addNewEvent (items , newItems){
+
+  this.setState({showModal:false ,selected:[] , items:items});
+  this._closeModal();
+}
+editEvent (items , item){
+
+  this.setState({showModal:false ,selected:[] , items:items});
+  this._closeModal();
+}
+  
+  zoomIn(){
+    var num = this.state.cellHeight + 15
+        this.setState({cellHeight:num})
+      }
+      zoomOut(){
+    var num = this.state.cellHeight - 15
+        this.setState({cellHeight:num})
+      }
+
     render() {
       return (
-        <div>
+        <div className="content-expanded ">
+            <div className="control-buttons">
+                <button  className="button-control" onClick={this.zoomIn}> <i className="zoom-plus-icon"></i> </button>
+                <button  className="button-control" onClick={this.zoomOut}> <i className="zoom-minus-icon"></i> </button>
+                <button  className="button-control" onClick={this._openModal}> <i className="schedule-icon"></i> </button>
+                <button  className="button-control" onClick={this.changeView.bind(null , 7)}> {moment.duration(7, "days").humanize()}  </button>
+                <button  className="button-control" onClick={this.changeView.bind(null , 4)}> {moment.duration(4, "days").humanize()}  </button>
+                <button  className="button-control" onClick={this.changeView.bind(null , 3)}> {moment.duration(3, "days").humanize()}  </button>
+                <button  className="button-control" onClick={this.changeView.bind(null , 1)}> {moment.duration(1, "day").humanize()} </button>
+            </div>
+        
           <ReactAgenda
             minDate={now}
             maxDate={new Date(now.getFullYear(), now.getMonth()+3)}
@@ -80,6 +136,21 @@ var colors= {
             onItemEdit={this.handleItemEdit.bind(this)}
             onCellSelect={this.handleCellSelection.bind(this)}
             onRangeSelection={this.handleRangeSelection.bind(this)}/>
+
+            {
+            this.state.showModal ? 
+            <Modal clickOutside={this._closeModal}>
+                <div className="modal-content">
+                    <ReactAgendaCtrl 
+                    items={this.state.items}
+                    itemColors={colors}
+                    selectedCells={this.state.selected} 
+                    Addnew={this.addNewEvent}
+                    edit={this.editEvent} />
+
+                </div>
+            </Modal> : ''
+            }
         </div>
       );
     }
