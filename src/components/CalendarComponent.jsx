@@ -61,7 +61,7 @@ var colors= {
     }
   
   handleCellSelection(item){
-    console.log('handleCellSelection',item)
+    this._openModal();
   }
   handleItemEdit(item){
     console.log('handleItemEdit', item)
@@ -109,17 +109,7 @@ editEvent (items , item){
 
     render() {
       return (
-        <div className="content-expanded ">
-            <div className="control-buttons">
-                <button  className="button-control" onClick={this.zoomIn}> <i className="zoom-plus-icon"></i> </button>
-                <button  className="button-control" onClick={this.zoomOut}> <i className="zoom-minus-icon"></i> </button>
-                <button  className="button-control" onClick={this._openModal}> <i className="schedule-icon"></i> </button>
-                <button  className="button-control" onClick={this.changeView.bind(null , 7)}> {moment.duration(7, "days").humanize()}  </button>
-                <button  className="button-control" onClick={this.changeView.bind(null , 4)}> {moment.duration(4, "days").humanize()}  </button>
-                <button  className="button-control" onClick={this.changeView.bind(null , 3)}> {moment.duration(3, "days").humanize()}  </button>
-                <button  className="button-control" onClick={this.changeView.bind(null , 1)}> {moment.duration(1, "day").humanize()} </button>
-            </div>
-        
+        <>
           <ReactAgenda
             minDate={now}
             maxDate={new Date(now.getFullYear(), now.getMonth()+3)}
@@ -147,11 +137,10 @@ editEvent (items , item){
                     selectedCells={this.state.selected} 
                     Addnew={this.addNewEvent}
                     edit={this.editEvent} />
-
                 </div>
             </Modal> : ''
             }
-        </div>
+        </>
       );
     }
   }
