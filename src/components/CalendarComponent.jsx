@@ -2,7 +2,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import '../assets/Agenda/index.css';
-import { ReactAgenda , ReactAgendaCtrl, guid , getUnique , getLast , getFirst , Modal } from 'react-agenda';
+// import { ReactAgenda , ReactAgendaCtrl, guid , getUnique , getLast , getFirst, Modal } from '../../node_modules/react-agenda/src/reactAgendaCtrl.js';
+import ReactAgenda from './src/reactAgenda.js';
+import ReactAgendaCtrl from './src/reactAgendaCtrl.js';
+import Modal from './src/Modal/Modal.js';
+import { guid } from './src/helpers.js';
+
 
 var now = new Date();
 
@@ -45,7 +50,7 @@ var colors= {
         locale:"pt-br",
         rowsPerHour:2,
         numberOfDays:4,
-        startDate: new Date()
+        startDate: now
       }
       this.handleRangeSelection = this.handleRangeSelection.bind(this)
     this.handleItemEdit = this.handleItemEdit.bind(this)
@@ -61,6 +66,7 @@ var colors= {
     }
   
   handleCellSelection(item){
+    this.setState({selected: moment(item)});
     this._openModal();
   }
   handleItemEdit(item){
