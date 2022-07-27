@@ -27,8 +27,26 @@ export default function UserScreen() {
 
     const { userInfos, updateUserInfos, signOut } = useAuth();
     const [room, setRoom] = useState('');
+    const [confirmedReservations, setConfirmedReservations] = useState([]);
+    const [pendingReservations, setPendingReservations] = useState([]);
     const navigate = useNavigate();
     const header = authConfig();
+
+    useEffect(() => {
+        async function getRoomReservations() {
+            try {
+                const confirmedRoomReservations = await (await axios.get(`${urlApi}/reservas/${room.classId}`, header)).data;
+                const pendingRoomReservations = await (await axios.get(`${urlApi}/reservas/pendentes/${room.classId}`, header)).data;
+                setConfirmedReservations(confirmedRoomReservations);
+                setPendingReservations(pendingRoomReservations);
+            } catch (err) {
+                console.log('Erro ao obter reservas da sala', err)
+            }
+        }
+        getRoomReservations();
+    }, [room])
+
+    console.log('reservations', confirmedReservations, pendingReservations);
 
     return (
         <ContainerMainScreen>

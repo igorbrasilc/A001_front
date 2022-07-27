@@ -10,7 +10,7 @@
     },
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "keywords": [],
-    "author": "",
+    "author": "Igor Corbari Brasil <igorbrasilc@hotmail.com>",
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.17.9",
