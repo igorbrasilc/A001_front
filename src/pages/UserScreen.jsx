@@ -7,8 +7,7 @@ import authConfig from '../api/authConfig.js';
 import useAuth from '../hooks/useAuth.js';
 import { useNavigate } from 'react-router';
 import urlApi from '../api/urlApi.js';
-
-import Agenda from '../components/CalendarComponent.jsx';
+import BigCalendarComponent from '../components/BigCalendarComponent.jsx';
 
 export default function UserScreen() {
 
@@ -46,13 +45,11 @@ export default function UserScreen() {
         getRoomReservations();
     }, [room])
 
-    console.log('reservations', confirmedReservations, pendingReservations);
-
     return (
         <ContainerMainScreen>
             <UserHeader />
             <RoomButton roomChosen={setRoom} />
-            {room == '' ? <p>Escolha uma sala</p> : <Agenda />}
+            {room == '' ? <p>Escolha uma sala</p> : <BigCalendarComponent pendingReservations={pendingReservations} confirmedReservations={confirmedReservations} />}
         </ContainerMainScreen>
     )
 }
