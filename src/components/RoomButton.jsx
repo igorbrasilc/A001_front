@@ -47,8 +47,8 @@ export default function RoomButton({ roomChosen }) {
 }
 
 const ContainerButton = styled.form`
-margin-top: 90px;
 font-family: var(--font-lexend);
+margin-top: 50px;
 
 label {
     font-weight: 700;

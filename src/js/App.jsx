@@ -4,15 +4,20 @@ import React, { useState, useEffect } from 'react';
 import ResetCss from '../assets/resetCss.js';
 import GlobalStyle from '../assets/globalStyles';
 import { UserProvider } from '../contexts/UserContext.js';
+import {
+    ThemeProvider,
+  } from '@mui/material';
 
 import SignInScreen from '../pages/SignInScreen.jsx';
 import SignUpScreen from '../pages/SignUpScreen.jsx';
 import UserScreen from '../pages/UserScreen.jsx';
 import AdminScreen from '../pages/AdminScreen.jsx';
+import theme from '../assets/theme.jsx';
 
 function App() {
 
   return (
+    <ThemeProvider theme={theme}>
     <UserProvider>
       <ResetCss />
       <GlobalStyle />
@@ -25,6 +30,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </UserProvider>
+    </ThemeProvider>
   );
 }
 

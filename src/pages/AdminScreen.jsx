@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import authConfig from '../api/authConfig.js';
 import urlApi from '../api/urlApi.js';
-import AdminHeader from '../components/AdminHeader.jsx';
+import Header from '../components/Header.jsx';
 import useAuth from '../hooks/useAuth.js';
 
 export default function AdminScreen() {
@@ -27,7 +27,7 @@ export default function AdminScreen() {
     
     return (
         <>
-            <AdminHeader />
+            <Header userType="admin" />
         </>
     )
 }

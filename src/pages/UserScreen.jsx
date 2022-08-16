@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UserHeader from '../components/UserHeader.jsx';
+import Header from '../components/Header.jsx';
 import RoomButton from '../components/RoomButton.jsx';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -47,7 +47,7 @@ export default function UserScreen() {
 
     return (
         <ContainerMainScreen>
-            <UserHeader />
+            <Header userType="user" />
             <RoomButton roomChosen={setRoom} />
             {room == '' ? <p>Escolha uma sala</p> : <BigCalendarComponent pendingReservations={pendingReservations} confirmedReservations={confirmedReservations} />}
         </ContainerMainScreen>
@@ -58,9 +58,8 @@ const ContainerMainScreen = styled.main`
 display: flex;
 flex-direction: column;
 align-items: center;
-height: 100vh;
 
 p {
-    margin-top: 40vh;
+    margin-top: 30vh;
 }
 `

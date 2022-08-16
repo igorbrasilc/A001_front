@@ -46,7 +46,7 @@ export default function BigCalendarComponent(props) {
       events={events}
       defaultDate={dayjs()}
       defaultView="week"
-      style={{ height: "80vh", width: "100vw", marginTop: "40px" }}
+      style={{ height: "80vh", width: "90vw", marginTop: "40px" }}
     />
   </div>
     )
