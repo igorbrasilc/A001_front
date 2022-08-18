@@ -10,6 +10,7 @@ import {
 
 import SignInScreen from '../pages/SignInScreen.jsx';
 import SignUpScreen from '../pages/SignUpScreen.jsx';
+import ReservationScreen from '../pages/ReservationScreen.jsx';
 import UserScreen from '../pages/UserScreen.jsx';
 import AdminScreen from '../pages/AdminScreen.jsx';
 import theme from '../assets/theme.jsx';
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/" element={<SignInScreen />} />
           <Route exact path="/cadastro" element={<SignUpScreen />} />
           <Route exact path="/user" element={<UserScreen />} /> 
+          <Route exact path="/reservas" element={<ReservationScreen />} /> 
           <Route exact path="/admin" element={<AdminScreen />} /> 
         </Routes>
       </BrowserRouter>
