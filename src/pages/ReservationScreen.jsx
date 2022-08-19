@@ -6,7 +6,9 @@ import authConfig from '../api/authConfig.js';
 import useAuth from '../hooks/useAuth.js';
 import { useNavigate } from 'react-router';
 import urlApi from '../api/urlApi.js';
-import ReservationAccordion from '../components/ReservationAccordion.jsx';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import ReservationCards from '../components/ReservationCards.jsx';
 
 export default function ReservationScreen() {
 
@@ -16,6 +18,7 @@ export default function ReservationScreen() {
             updateUserInfos(res.data);
             let userType = 'user';
             if (res.data.levelId === 1) userType = 'admin';
+            setLoading(false);
             getRoomReservations(userType);
         });
         promise.catch(err => {
@@ -28,6 +31,7 @@ export default function ReservationScreen() {
     const { userInfos, updateUserInfos, signOut } = useAuth();
     const [confirmedReservations, setConfirmedReservations] = useState([]);
     const [pendingReservations, setPendingReservations] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const header = authConfig();
 
@@ -45,7 +49,10 @@ export default function ReservationScreen() {
     return (
         <ContainerMainScreen>
             <Header userType={userInfos.levelId === 1 ? 'admin' : 'user'} />
-            <ReservationAccordion />
+            <Typography variant="h5" component="h2">Reservas pendentes</Typography>
+            {loading ? <CircularProgress size={50} /> : <ReservationCards reservations={pendingReservations} userType={userInfos.levelId === 1 ? 'admin' : 'user'} />}
+            <Typography variant="h5" component="h2">Reservas confirmadas</Typography>
+            {loading ? <CircularProgress size={50} /> : <ReservationCards reservations={confirmedReservations} userType={userInfos.levelId === 1 ? 'admin' : 'user'} />}
         </ContainerMainScreen>
     )
 }
@@ -54,8 +61,9 @@ const ContainerMainScreen = styled.main`
 display: flex;
 flex-direction: column;
 align-items: center;
+justify-content: center;
 
-p {
-    margin-top: 30vh;
+h2 {
+    margin-top: 50px;
 }
 `

@@ -22,7 +22,7 @@ export default function Header( userType ) {
             <Badge badgeContent={4} color="secondary" >
                 <Button color="inherit" onClick={() => navigate('/reservas')}>Reservas</Button>
             </Badge>
-          <Button color="inherit" onClick={() => navigate(userType === 'admin' ? '/admin' : '/user')}>Início</Button>
+          <Button color="inherit" onClick={() => navigate('/')}>Início</Button>
           <Button color="inherit" onClick={() => handleLogout()}>Sair</Button>
         </Toolbar>
       </AppBar>

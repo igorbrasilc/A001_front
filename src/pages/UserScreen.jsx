@@ -16,6 +16,7 @@ export default function UserScreen() {
         promise.then(res => {
             updateUserInfos(res.data);
             if (res.data.levelId === 1) navigate('/admin');
+            getRoomReservations()
         });
         promise.catch(err => {
             console.log('Erro ao obter informações do usuário', err);
@@ -24,32 +25,26 @@ export default function UserScreen() {
         })
     }, []);
 
+    async function getRoomReservations() {
+        try {
+            const confirmedRoomReservations = await (await axios.get(`${urlApi}/reservas/${room.classId}`, header)).data;
+            setConfirmedReservations(confirmedRoomReservations);
+        } catch (err) {
+            console.log('Erro ao obter reservas da sala', err)
+        }
+    }
+
     const { userInfos, updateUserInfos, signOut } = useAuth();
     const [room, setRoom] = useState('');
     const [confirmedReservations, setConfirmedReservations] = useState([]);
-    const [pendingReservations, setPendingReservations] = useState([]);
     const navigate = useNavigate();
     const header = authConfig();
-
-    useEffect(() => {
-        async function getRoomReservations() {
-            try {
-                const confirmedRoomReservations = await (await axios.get(`${urlApi}/reservas/${room.classId}`, header)).data;
-                const pendingRoomReservations = await (await axios.get(`${urlApi}/reservas/pendentes/${room.classId}`, header)).data;
-                setConfirmedReservations(confirmedRoomReservations);
-                setPendingReservations(pendingRoomReservations);
-            } catch (err) {
-                console.log('Erro ao obter reservas da sala', err)
-            }
-        }
-        getRoomReservations();
-    }, [room])
 
     return (
         <ContainerMainScreen>
             <Header userType="user" />
             <RoomButton roomChosen={setRoom} />
-            {room == '' ? <p>Escolha uma sala</p> : <BigCalendarComponent pendingReservations={pendingReservations} confirmedReservations={confirmedReservations} />}
+            {room == '' ? <p>Escolha uma sala</p> : <BigCalendarComponent confirmedReservations={confirmedReservations} />}
         </ContainerMainScreen>
     )
 }

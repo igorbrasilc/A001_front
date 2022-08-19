@@ -12,8 +12,7 @@ dayjs.locale('pt-br');
 const localizer = momentLocalizer(moment);
 
 export default function BigCalendarComponent(props) {
-    const {pendingReservations, confirmedReservations} = props;
-    console.log(pendingReservations);
+    const { confirmedReservations} = props;
 
     function formatPropsToEvents(reservations) {
         return reservations.map(reservation => {
@@ -26,8 +25,7 @@ export default function BigCalendarComponent(props) {
         )
     }
 
-    const events = formatPropsToEvents(pendingReservations);
-    console.log(events);
+    const events = formatPropsToEvents(confirmedReservations);
 
     // const events = [
     //     {
