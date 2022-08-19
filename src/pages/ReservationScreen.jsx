@@ -50,9 +50,19 @@ export default function ReservationScreen() {
         <ContainerMainScreen>
             <Header userType={userInfos.levelId === 1 ? 'admin' : 'user'} />
             <Typography variant="h5" component="h2">Reservas pendentes</Typography>
-            {loading ? <CircularProgress size={50} /> : <ReservationCards reservations={pendingReservations} userType={userInfos.levelId === 1 ? 'admin' : 'user'} />}
+            {
+                loading ? 
+                <CircularProgress size={50} /> 
+                : 
+                <ReservationCards reservations={pendingReservations} userType={userInfos.levelId === 1 ? 'admin' : 'user'} />
+            }
             <Typography variant="h5" component="h2">Reservas confirmadas</Typography>
-            {loading ? <CircularProgress size={50} /> : <ReservationCards reservations={confirmedReservations} userType={userInfos.levelId === 1 ? 'admin' : 'user'} />}
+            {
+                loading ? 
+                <CircularProgress size={50} /> 
+                : 
+                <ReservationCards reservations={confirmedReservations} userType={userInfos.levelId === 1 ? 'admin' : 'user'} />
+            }
         </ContainerMainScreen>
     )
 }
