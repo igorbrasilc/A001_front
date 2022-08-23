@@ -89,7 +89,7 @@ export default function ReservationCards({reservations, userType}) {
                         <Typography variant="body1" align="center" sx={{fontWeight: 700}}>Término: {calculateTime(event.reservationDate, event.reservationHour, event.durationInHours)}h</Typography>
                         <Divider />
                     </CardContent>
-                    {userType === 'admin' ? 
+                    {userType === 'user' ? 
                     <></> : 
                     <CardActions sx={{margin: '0 auto'}}>
                         <Button size="small" color="success" variant="contained" onClick={() => handleRequest(event.id, 'approve')}>Aprovar</Button>
