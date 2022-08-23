@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-export default function Header( userType ) {
+export default function Header( {pendingReservationsQtd} ) {
   const { signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ export default function Header( userType ) {
     <Box sx={{ flexGrow: 1, width: '100vw' }}>
       <AppBar position="static">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between'}}>
-            <Badge badgeContent={4} color="secondary" >
+            <Badge badgeContent={pendingReservationsQtd} color="secondary" >
                 <Button color="inherit" onClick={() => navigate('/reservas')}>Reservas</Button>
             </Badge>
           <Button color="inherit" onClick={() => navigate('/')}>Início</Button>

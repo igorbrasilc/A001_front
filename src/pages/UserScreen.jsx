@@ -11,19 +11,27 @@ import BigCalendarComponent from '../components/BigCalendarComponent.jsx';
 
 export default function UserScreen() {
 
+    const { userInfos, updateUserInfos, signOut } = useAuth();
+    const [room, setRoom] = useState('');
+    const [confirmedReservations, setConfirmedReservations] = useState([]);
+    const navigate = useNavigate();
+    const header = authConfig();
+
     useEffect(() => {
         const promise = axios.get(`${urlApi}/get-user`, header);
         promise.then(res => {
             updateUserInfos(res.data);
             if (res.data.levelId === 1) navigate('/admin');
-            getRoomReservations()
+            if (room) {
+                getRoomReservations();
+            }
         });
         promise.catch(err => {
             console.log('Erro ao obter informações do usuário', err);
             signOut();
             navigate('/');
         })
-    }, []);
+    }, [room]);
 
     async function getRoomReservations() {
         try {
@@ -34,15 +42,9 @@ export default function UserScreen() {
         }
     }
 
-    const { userInfos, updateUserInfos, signOut } = useAuth();
-    const [room, setRoom] = useState('');
-    const [confirmedReservations, setConfirmedReservations] = useState([]);
-    const navigate = useNavigate();
-    const header = authConfig();
-
     return (
         <ContainerMainScreen>
-            <Header userType="user" />
+            <Header userType="user" pendingReservationsQtd={userInfos?._count?.pendingRoomReservations} />
             <RoomButton roomChosen={setRoom} />
             {room == '' ? <p>Escolha uma sala</p> : <BigCalendarComponent confirmedReservations={confirmedReservations} />}
         </ContainerMainScreen>

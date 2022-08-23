@@ -18,7 +18,6 @@ const theme = createTheme({
       styleOverrides: {
         body: {
           backgroundColor: '#f3f3f3',
-          //   backgroundImage: 'linear-gradient(180deg, rgba(255,167,81,1) 31%, rgba(255,226,89,1) 78%)',
           backgroundAttachment: 'fixed',
         },
       },
