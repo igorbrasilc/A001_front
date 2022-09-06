@@ -36,10 +36,12 @@ export default function BigCalendarComponent(props) {
         const dateWithHour = date.add(splittedHour[0], 'h');
         const splittedDuration = duration.split(':');
         const dateWithMinutes = dateWithHour.add(splittedHour[1], 'm');
+        
+        if (intention === 'start') return dateWithMinutes.toDate();
+
         const endDateHour = dateWithMinutes.add(splittedDuration[0], 'h');
         const endDateMinutes = endDateHour.add(splittedDuration[1], 'm');
 
-        if (intention === 'start') return dateWithMinutes.toDate();
         if (intention === 'end') return endDateMinutes.toDate();
     }
 
