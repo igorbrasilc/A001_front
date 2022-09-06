@@ -66,7 +66,7 @@ function SignInScreen() {
           type="password"
           placeholder="Senha"
           title="Deve conter pelo menos 1 número, 1 letra maiúscula, 1 minúscula e no mínimo 6 caracteres"
-        //   pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$" //TODO: lembrar de alterar a senha do admin para o formato valido e reativar a validação do pattern
+          pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$"
           {...register('password')}
           disabled={loading}
           required
