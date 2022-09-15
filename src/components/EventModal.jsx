@@ -70,8 +70,11 @@ function EventModal({ openModal, setOpenModal, roomId }) {
   }
 
   function formatData(data) {
-    const { reservationDate } = data;
-    if (dayjs(reservationDate).isBefore(dayjs())) {
+    const { reservationDate, reservationHour } = data;
+    const splittedHourString = reservationHour.split(':');
+    const hour = splittedHourString[0];
+    const minutes = splittedHourString[1];
+    if (dayjs(reservationDate).add(hour, 'hour').add(minutes, 'minute').isBefore(dayjs())) {
         alert('A data de reserva precisa ser após a data de hoje');
         return null;
     }

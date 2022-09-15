@@ -4,15 +4,18 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import authConfig from '../api/authConfig.js';
 import urlApi from '../api/urlApi.js';
+import "dayjs/locale/pt-br";
 import axios from 'axios';
 
 dayjs.extend(customParseFormat);
+dayjs.locale('pt-br');
 
 const styles = {
     card: {
@@ -29,7 +32,7 @@ const styles = {
     },
 }
 
-export default function ReservationCards({reservations, userType}) {
+export default function ReservationCards({reservations, userType, reservationStatus}) {
 
     const header = authConfig();
 
@@ -69,10 +72,31 @@ export default function ReservationCards({reservations, userType}) {
                 alert('Não foi possível desaprovar a reserva...')
             });
         }
+
+        if (intention === 'delete') {
+            const promise = axios.delete(`${urlApi}/reservas/confirmadas/${reservationId}/deletar`, {}, header);
+            promise.then(res => {
+                alert('Reserva deletada!');
+                window.location.reload();
+            })
+            .catch(err => {
+                console.log(err);
+                alert('Não foi possível desaprovar a reserva...')
+            });
+        }
     }
 
     function displayCards(events) {
-        return events.map((event) => {
+
+        const filteredEvents = events.filter(event => {
+            const splittedHourString = event.reservationHour.split(':');
+            const hour = splittedHourString[0];
+            const minutes = splittedHourString[1];
+
+            return dayjs(event.reservationDate, 'DD/MM/YYYY').add(hour, 'hour').add(minutes, 'minute').isAfter(dayjs())
+        });
+
+        return filteredEvents.map((event) => {
             return (
                 <Card variant="outlined" sx={styles.card}>
                     <CardContent>
@@ -89,8 +113,10 @@ export default function ReservationCards({reservations, userType}) {
                         <Typography variant="body1" align="center" sx={{fontWeight: 700}}>Término: {calculateTime(event.reservationDate, event.reservationHour, event.durationInHours)}h</Typography>
                         <Divider />
                     </CardContent>
-                    {userType === 'user' ? 
-                    <></> : 
+                    {userType === 'user' || reservationStatus === 'confirmed' ? 
+                    <CardActions sx={{margin: '0 auto'}}>
+                    <Button size="small" color="error" variant="contained" startIcon={<DeleteIcon />} onClick={() => handleRequest(event.id, 'delete')}>Deletar</Button>
+                </CardActions> : 
                     <CardActions sx={{margin: '0 auto'}}>
                         <Button size="small" color="success" variant="contained" onClick={() => handleRequest(event.id, 'approve')}>Aprovar</Button>
                         <Button size="small" color="error" variant="contained" onClick={() => handleRequest(event.id, 'disapprove')}>Reprovar</Button>
