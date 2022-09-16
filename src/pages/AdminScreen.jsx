@@ -55,7 +55,7 @@ export default function UserScreen() {
                     <>
                       <Button variant="contained" sx={{ margin: 3 }} onClick={() => setOpenModal(true)}>Adicionar evento</Button>
                       <BigCalendarComponent confirmedReservations={confirmedReservations} />
-                      <EventModal openModal={openModal} setOpenModal={setOpenModal} roomId={room.classId} />
+                      <EventModal openModal={openModal} setOpenModal={setOpenModal} roomId={room.classId} userType="admin" />
                     </>
                   )
             }

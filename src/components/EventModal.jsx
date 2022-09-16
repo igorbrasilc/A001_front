@@ -41,7 +41,7 @@ const modalStyles = {
   },
 };
 
-function EventModal({ openModal, setOpenModal, roomId }) {
+function EventModal({ openModal, setOpenModal, roomId, userType }) {
   const { register, handleSubmit } = useForm();
   const header = authConfig();
 
@@ -60,8 +60,13 @@ function EventModal({ openModal, setOpenModal, roomId }) {
         header
     );
     promise.then(() => {
-        alert('Reserva criada! Verifique a aprovação na aba Reservas');
-        handleClose();
+        if (userType === 'admin') {
+            alert('Reserva criada!');
+            handleClose();
+        } else {
+            alert('Reserva criada! Verifique a aprovação na aba Reservas');
+            handleClose();
+        }
     })
     .catch(err => {
         alert('Houve um erro ao criar a reserva...');
@@ -146,9 +151,9 @@ function EventModal({ openModal, setOpenModal, roomId }) {
           />
         </div>
         <Button variant="outlined" type="submit">Confirmar</Button>
-        <Typography sx={modalStyles.footerText}>
+        {userType === 'user' ? (<Typography sx={modalStyles.footerText}>
           *Esta reserva será solicitada ao administrador
-        </Typography>
+        </Typography>) : <></>}
       </Box>
     </Modal>
   );
