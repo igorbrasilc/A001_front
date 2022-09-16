@@ -74,14 +74,14 @@ export default function ReservationCards({reservations, userType, reservationSta
         }
 
         if (intention === 'delete') {
-            const promise = axios.delete(`${urlApi}/reservas/confirmadas/${reservationId}/deletar`, {}, header);
+            const promise = axios.delete(`${urlApi}/reservas/confirmadas/${reservationId}/deletar`, header);
             promise.then(res => {
                 alert('Reserva deletada!');
                 window.location.reload();
             })
             .catch(err => {
                 console.log(err);
-                alert('Não foi possível desaprovar a reserva...')
+                alert('Não foi possível deletar a reserva...');
             });
         }
     }
@@ -114,13 +114,13 @@ export default function ReservationCards({reservations, userType, reservationSta
                         <Divider />
                     </CardContent>
                     {userType === 'user' || reservationStatus === 'confirmed' ? 
-                    <CardActions sx={{margin: '0 auto'}}>
-                    <Button size="small" color="error" variant="contained" startIcon={<DeleteIcon />} onClick={() => handleRequest(event.id, 'delete')}>Deletar</Button>
-                </CardActions> : 
-                    <CardActions sx={{margin: '0 auto'}}>
-                        <Button size="small" color="success" variant="contained" onClick={() => handleRequest(event.id, 'approve')}>Aprovar</Button>
-                        <Button size="small" color="error" variant="contained" onClick={() => handleRequest(event.id, 'disapprove')}>Reprovar</Button>
-                    </CardActions>
+                        <CardActions sx={{margin: '0 auto'}}>
+                            <Button size="small" color="error" variant="contained" startIcon={<DeleteIcon />} onClick={() => handleRequest(event.id, 'delete')}>Deletar</Button>
+                        </CardActions> : 
+                        <CardActions sx={{margin: '0 auto'}}>
+                            <Button size="small" color="success" variant="contained" onClick={() => handleRequest(event.id, 'approve')}>Aprovar</Button>
+                            <Button size="small" color="error" variant="contained" onClick={() => handleRequest(event.id, 'disapprove')}>Reprovar</Button>
+                        </CardActions>
                     }
                 </Card>
             )
