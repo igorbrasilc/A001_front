@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import 'moment/locale/pt-br';
 import "../assets/calendarStyles.scss";
+import EventInfoModal from './EventInfoModal.jsx';
 
 moment.locale("pt-br");
 dayjs.locale('pt-br');
@@ -15,6 +16,9 @@ const localizer = momentLocalizer(moment);
 
 export default function BigCalendarComponent(props) {
     const { confirmedReservations} = props;
+    const [openModal, setOpenModal] = React.useState(false);
+    const [clickedReservation, setClickedReservation] = React.useState(null);
+
 
     function formatPropsToEvents(reservations) {
         return reservations.map(reservation => {
@@ -26,6 +30,12 @@ export default function BigCalendarComponent(props) {
             } 
         }
         )
+    }
+
+    function onSelectEvent(e) {
+        console.log('event on select', e);
+        setClickedReservation(e);
+        setOpenModal(true);
     }
 
     const events = formatPropsToEvents(confirmedReservations);
@@ -45,6 +55,7 @@ export default function BigCalendarComponent(props) {
         if (intention === 'end') return endDateMinutes.toDate();
     }
 
+
     return (
         <div>
             <Calendar
@@ -53,8 +64,10 @@ export default function BigCalendarComponent(props) {
             defaultDate={dayjs()}
             defaultView="month"
             dayLayoutAlgorithm="no-overlap"
+            onSelectEvent={onSelectEvent}
             style={{ height: "80vh", width: "90vw", marginTop: "40px" }}
             />
+            <EventInfoModal reservation={clickedReservation} openModal={openModal} setOpenModal={setOpenModal} />
         </div>
     )
 }
