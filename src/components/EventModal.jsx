@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
-  Button, Modal, Box, Typography, Form, TextField,
+  Button, Modal, Box, Typography, Form, TextField, Checkbox, FormGroup, FormControlLabel 
 } from '@mui/material';
 import authConfig from '../api/authConfig.js';
 import urlApi from '../api/urlApi.js';
@@ -43,6 +43,7 @@ const modalStyles = {
 
 function EventModal({ openModal, setOpenModal, roomId, userType }) {
   const { register, handleSubmit } = useForm();
+  const [weeklyCheckboxStatus, setWeeklyCheckboxStatus] = useState(false);
   const header = authConfig();
 
   function handleClose() {
@@ -51,27 +52,28 @@ function EventModal({ openModal, setOpenModal, roomId, userType }) {
 
   async function onSubmit(data, e) {
     const formattedData = formatData(data);
+    console.log(formattedData)
 
     if (!formattedData) return;
 
-    const promise = axios.post(
-        `${urlApi}/agendamento/${roomId}`, 
-        formattedData,
-        header
-    );
-    promise.then(() => {
-        if (userType === 'admin') {
-            alert('Reserva criada!');
-            handleClose();
-        } else {
-            alert('Reserva criada! Verifique a aprovação na aba Reservas');
-            handleClose();
-        }
-    })
-    .catch(err => {
-        alert('Houve um erro ao criar a reserva...');
-        console.log(err);
-    });
+    // const promise = axios.post(
+    //     `${urlApi}/agendamento/${roomId}`, 
+    //     formattedData,
+    //     header
+    // );
+    // promise.then(() => {
+    //     if (userType === 'admin') {
+    //         alert('Reserva criada!');
+    //         handleClose();
+    //     } else {
+    //         alert('Reserva criada! Verifique a aprovação na aba Reservas');
+    //         handleClose();
+    //     }
+    // })
+    // .catch(err => {
+    //     alert('Houve um erro ao criar a reserva...');
+    //     console.log(err);
+    // });
   }
 
   function formatData(data) {
@@ -85,7 +87,7 @@ function EventModal({ openModal, setOpenModal, roomId, userType }) {
     }
     return { 
         ...data,
-        reservationDate: dayjs(reservationDate).format('DD/MM/YYYY').toString()
+        reservationDate: dayjs(reservationDate).format('DD/MM/YYYY').toString(),
     }
   }
 
@@ -149,8 +151,19 @@ function EventModal({ openModal, setOpenModal, roomId, userType }) {
             }}
             sx={modalStyles.input}
           />
+          <FormGroup sx={{marginBottom: '5px'}}>
+            <FormControlLabel control={<Checkbox checked={weeklyCheckboxStatus} color="primary" onClick={() => setWeeklyCheckboxStatus((prev) => !prev)}/>} label="Repetir reserva semanalmente?" />
+          </FormGroup>
+          {weeklyCheckboxStatus && 
+          <TextField 
+            label="Quantas semanas?" 
+            {...register('numberOfWeeks', { min: 2, max: 8, valueAsNumber: true  })} 
+            type="number" defaultValue="2" inputProps={{ min: 2, max: 8 }}
+            helperText="2 a 8 semanas"  
+          />
+          }
         </div>
-        <Button variant="outlined" type="submit">Confirmar</Button>
+        <Button variant="outlined" type="submit" sx={{marginTop: '10px'}}>Confirmar</Button>
         {userType === 'user' ? (<Typography sx={modalStyles.footerText}>
           *Esta reserva será solicitada ao administrador
         </Typography>) : <></>}
