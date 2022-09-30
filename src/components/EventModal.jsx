@@ -56,24 +56,24 @@ function EventModal({ openModal, setOpenModal, roomId, userType }) {
 
     if (!formattedData) return;
 
-    // const promise = axios.post(
-    //     `${urlApi}/agendamento/${roomId}`, 
-    //     formattedData,
-    //     header
-    // );
-    // promise.then(() => {
-    //     if (userType === 'admin') {
-    //         alert('Reserva criada!');
-    //         handleClose();
-    //     } else {
-    //         alert('Reserva criada! Verifique a aprovação na aba Reservas');
-    //         handleClose();
-    //     }
-    // })
-    // .catch(err => {
-    //     alert('Houve um erro ao criar a reserva...');
-    //     console.log(err);
-    // });
+    const promise = axios.post(
+        `${urlApi}/agendamento/${roomId}`, 
+        formattedData,
+        header
+    );
+    promise.then(() => {
+        if (userType === 'admin') {
+            alert('Reserva criada!');
+            handleClose();
+        } else {
+            alert('Reserva criada! Verifique a aprovação na aba Reservas');
+            handleClose();
+        }
+    })
+    .catch(err => {
+        alert('Houve um erro ao criar a reserva...');
+        console.log(err);
+    });
   }
 
   function formatData(data) {
