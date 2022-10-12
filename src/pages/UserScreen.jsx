@@ -49,16 +49,16 @@ export default function UserScreen() {
       <Header userType="user" pendingReservationsQtd={userInfos?._count?.pendingRoomReservations} />
       <RoomButton roomChosen={setRoom} />
       {
-                !room
-                  ? <p>Escolha uma sala</p>
-                  : (
-                    <>
-                      <Button variant="contained" sx={{ margin: 3 }} onClick={() => setOpenModal(true)}>Adicionar evento</Button>
-                      <BigCalendarComponent confirmedReservations={confirmedReservations} />
-                      <EventModal openModal={openModal} setOpenModal={setOpenModal} roomId={room.classId} userType="admin" />
-                    </>
-                  )
-            }
+        !room
+        ? <p>Escolha uma sala</p>
+        : (
+            <>
+            <Button variant="contained" sx={{ margin: 3 }} onClick={() => setOpenModal(true)}>Adicionar evento</Button>
+            <BigCalendarComponent confirmedReservations={confirmedReservations} />
+            <EventModal openModal={openModal} setOpenModal={setOpenModal} roomId={room.classId} userType="admin" />
+            </>
+            )
+        }
     </ContainerMainScreen>
   );
 }

@@ -88,6 +88,7 @@ function EventModal({ openModal, setOpenModal, roomId, userType }) {
     return { 
         ...data,
         reservationDate: dayjs(reservationDate).format('DD/MM/YYYY').toString(),
+        numberOfWeeks: weeklyCheckboxStatus ? numberOfWeeks : ''
     }
   }
 
