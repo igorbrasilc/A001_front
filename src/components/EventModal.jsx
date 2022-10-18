@@ -52,7 +52,6 @@ function EventModal({ openModal, setOpenModal, roomId, userType }) {
 
   async function onSubmit(data, e) {
     const formattedData = formatData(data);
-    console.log(formattedData)
 
     if (!formattedData) return;
 

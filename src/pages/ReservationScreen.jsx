@@ -78,14 +78,12 @@ export default function ReservationScreen() {
         const availableMonths = new Set();
         confirmedRes.forEach(r => {
             const month = dayjs(r.reservationDate, 'DD/MM/YYYY').format('MM/YYYY').toString();
-            console.log('month', month)
             availableMonths.add(month);
         });
         pendingRes.forEach(r => {
             const month = dayjs(r.reservationDate, 'DD/MM/YYYY').format('MM/YYYY').toString();
             availableMonths.add(month);
         });
-        console.log(Array.from(availableMonths));
         return Array.from(availableMonths);
     }
 

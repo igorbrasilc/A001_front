@@ -26,14 +26,15 @@ export default function BigCalendarComponent(props) {
                 id: reservation.id,
                 start: calculateTime(reservation.reservationDate, reservation.reservationHour, reservation.durationInHours, 'start'),
                 end: calculateTime(reservation.reservationDate, reservation.reservationHour, reservation.durationInHours, 'end'),
-                title: reservation.description
-            } 
+                title: reservation.description,
+                email: reservation.users.email,
+                name: reservation.users.name,
+            }
         }
         )
     }
 
     function onSelectEvent(e) {
-        console.log('event on select', e);
         setClickedReservation(e);
         setOpenModal(true);
     }
