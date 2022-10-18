@@ -46,7 +46,7 @@ export default function UserScreen() {
 
   return (
     <ContainerMainScreen>
-      <Header userType="admin" pendingReservationsQtd={userInfos?._count?.pendingRoomReservations} />
+      <Header />
       <RoomButton roomChosen={setRoom} />
       {
                 !room

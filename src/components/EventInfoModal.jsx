@@ -49,6 +49,9 @@ function handleDelete(reservationId) {
                 <CardContent>
                     <Typography variant="h6" sx={{ marginBottom: '15px', marginTop: '15px', fontSize: '18px' }}>Descrição: {event.title}</Typography>
                     <Divider />
+                    <Typography variant="body1" align="center" sx={{fontWeight: 700}}>Nome: {event.name}</Typography>
+                    <Typography variant="body1" align="center" sx={{fontWeight: 700}}>Email: {event.email}</Typography>
+                    <Divider />
                     <Typography variant="body1" align="center" sx={{fontWeight: 700}}>Início: {dayjs(event.start).format('DD/MM/YY HH:mm')}h</Typography>
                     <Typography variant="body1" align="center" sx={{fontWeight: 700}}>Término: {dayjs(event.end).format('DD/MM/YY HH:mm')}h</Typography>
                     <Divider />
